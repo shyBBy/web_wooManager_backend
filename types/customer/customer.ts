@@ -82,7 +82,7 @@ export type GetOneCustomerResponse = CustomerProfileInterface
 export type GetListOfCustomersResponse = GetOneCustomerResponse[]
 
 export interface GetPaginatedListOfAllCustomersResponse {
-    vehicles: GetListOfCustomersResponse;
+    customers: GetListOfCustomersResponse;
     pagesCount: number;
     resultsCount: number;
     badFilters?: FilterRecords;

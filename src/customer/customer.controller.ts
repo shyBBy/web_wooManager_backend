@@ -1,9 +1,9 @@
-import {Controller, Get, Param, UseGuards} from '@nestjs/common';
+import {Controller, Get, Param, Query, UseGuards} from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { UserObj } from '../decorators/user-object.decorator';
 import { UserEntity } from '../user/entities/user.entity';
-import { GetListOfCustomersResponse } from '../../types/customer';
+import {GetListOfCustomersResponse, GetPaginatedListOfAllCustomersResponse} from '../../types/customer';
 
 @Controller('customer')
 export class CustomerController {
@@ -11,8 +11,16 @@ export class CustomerController {
 
   @Get('/list')
   @UseGuards(JwtAuthGuard)
-  getAll(@UserObj() user: UserEntity): Promise<GetListOfCustomersResponse> {
-    return this.customerService.getAllCustomers(user);
+  getAll(
+      @UserObj() user: UserEntity,
+      @Query('page') page: string,
+      @Query('perPage') perPage: string,
+  ): Promise<GetPaginatedListOfAllCustomersResponse> {
+    return this.customerService.getAllCustomers(
+        user,
+        Number(page),
+        Number(perPage),
+    );
   }
 
 

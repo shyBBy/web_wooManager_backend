@@ -82,21 +82,19 @@ export class UserService {
 
   async getMe(user: UserEntity): Promise<UserRes> {
     const selectedUser = await this.dataSource
-      .createQueryBuilder()
-      .select('user')
-      .from(UserEntity, 'user')
-      .where({ email: user.email })
-      .getOne();
+        .createQueryBuilder(UserEntity, 'user')
+        .leftJoinAndSelect('user.store', 'store')
+        .where({ email: user.email })
+        .getOne();
 
     let storeData = null;
-    if (selectedUser.store) {
+    if (selectedUser?.store) {
       storeData = {
         id: selectedUser.store.id,
         name: selectedUser.store.name,
         url: selectedUser.store.url,
       };
     }
-
     return {
       id: selectedUser.id,
       email: selectedUser.email,

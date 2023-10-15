@@ -1,11 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { StoreService } from '../store/store.service';
-import { GetListOfCustomersResponse } from '../../types/customer';
+import {GetListOfCustomersResponse, GetPaginatedListOfAllCustomersResponse} from '../../types/customer';
 import axios from 'axios';
 import { UserEntity } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 import {createResponse, ResponseData} from "../utils/createResponse";
+
+export interface PaginationInfo {
+  totalPages: number;
+  totalUsers: number;
+  currentPage: number;
+}
 
 @Injectable()
 export class CustomerService {
@@ -15,7 +21,11 @@ export class CustomerService {
     private userService: UserService,
   ) {}
 
-  async getAllCustomers(user: UserEntity): Promise<GetListOfCustomersResponse> {
+  async getAllCustomers(
+      user: UserEntity,
+      page: number = 1,
+      perPage: number = 10
+  ): Promise<GetPaginatedListOfAllCustomersResponse> {
     const store = await this.storeService.getStoreByUserId(user.id);
     const userEntity = await this.userService.getByEmail(user.email);
 
@@ -24,8 +34,14 @@ export class CustomerService {
     const headers = {
       Authorization: `Bearer ${token}`,
     };
+
+    const params = {
+      page,
+      per_page: perPage,
+    };
+
     try {
-      const res = await axios.get(url, { headers });
+      const res = await axios.get(url, { headers, params });
       const customers = res.data || [];
       for (const customer of customers) {
         const userId = customer.id;
@@ -33,18 +49,33 @@ export class CustomerService {
         const metaRes = await axios.get(metaUrl, { headers });
 
         const customerMeta = metaRes.data.meta;
-        console.log('Meta dla użytkownika:', customerMeta);
       }
-      return customers;
+      const pagesCount = parseInt(res.headers['x-wp-totalpages'], 10);
+      const resultsCount = parseInt(res.headers['x-wp-total'], 10);
+
+      if (!resultsCount) {
+        return {
+          customers: [],
+          pagesCount: 0,
+          resultsCount: 0,
+        }
+      }
+
+      return {
+        customers,
+        pagesCount,
+        resultsCount,
+      }
+
     } catch (e) {
-      return []
-      // throw new HttpException(
-      //   {
-      //     message: `Coś poszło nie tak, spróbuj raz jeszcze.`,
-      //     isSuccess: false,
-      //   },
-      //   HttpStatus.BAD_REQUEST,
-      // );
+      console.log(e)
+      throw new HttpException(
+          {
+            message: `Cos poszlo nie tak, spróbuj raz jeszcze.`,
+            isSuccess: false,
+          },
+          HttpStatus.BAD_REQUEST,
+      );
     }
   }
 

@@ -23,6 +23,7 @@ import { mailTemplate } from '../utils/mailTemplate';
 import * as fs from 'fs';
 import * as path from 'path';
 import { storageDir } from '../utils/storage';
+import { activationAccountMailTemplate } from 'src/utils/ActivationAccountMailTemplate';
 
 // import {deleteFile} from "../utils/deleteFile";
 
@@ -37,6 +38,7 @@ export class UserService {
   async create(createUserDto: UserCreateDto) {
     const { email, password } = createUserDto;
 
+    const activationCode = ActivationCode.create();
     const checkEmail = await UserEntity.findOneBy({ email });
 
     if (checkEmail) {
@@ -50,25 +52,19 @@ export class UserService {
     }
 
     try {
-      const activationCode = ActivationCode.create();
       const user = new UserEntity();
-      user.id = uuid();
       user.email = email;
       user.password = hashPwd(password);
       user.isActive = false;
       user.activationCode = activationCode;
       await user.save();
       await this.mailerService.sendMail({
-        to: `${email}`,
-        subject: 'Kod aktywacyjny',
-        text: 'Test e-mail',
-        html: mailTemplate(activationCode),
-      });
-      return createResponse(
-        true,
-        'Pomyślnie utworzono konto, sprawdź poczte e-mail.',
-        200,
-      );
+                to: `${email}`,
+                subject: 'Kod aktywacyjny',
+                text: 'Kod aktywacyjny',
+                html: activationAccountMailTemplate(activationCode),
+            })
+      return createResponse(true, 'Pomyślnie utworzono konto, sprawdź skrzynkę pocztową i aktywuj konto!', 200);
     } catch (e) {
       throw new HttpException(
         {

@@ -12,6 +12,8 @@ import { StoreModule } from './store/store.module';
 import { CustomerModule } from './customer/customer.module';
 import { StoreEntity } from './store/entities/store.entity';
 import {LastChangeEntity} from "./admin/entities/lastChange.entity";
+import { FurgonetkaModule } from './furgonetka/furgonetka.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import {LastChangeEntity} from "./admin/entities/lastChange.entity";
     AdminModule,
     StoreModule,
     CustomerModule,
+    FurgonetkaModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

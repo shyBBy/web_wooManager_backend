@@ -46,10 +46,6 @@ export class UserEntity extends BaseEntity {
   })
   permissions!: string[];
 
-  @Column({
-    default: '',
-  })
-  wpTokenAuth!: string;
 
   @OneToOne(() => StoreEntity, (store) => store.user_profile, {
     eager: true,

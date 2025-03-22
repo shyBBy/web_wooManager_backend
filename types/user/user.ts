@@ -24,8 +24,7 @@ export interface UserProfile extends UserCreate {
     isActive: Boolean;
     role: USER_ROLE | string;
     activationCode: string;
-    store: null | StoreEntity;
-    wpTokenAuth: string | null;
+    store: null | string | StoreEntity;
 
 }
 

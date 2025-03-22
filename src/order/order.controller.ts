@@ -9,6 +9,8 @@ import { UserEntity } from '../user/entities/user.entity';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+
+
   @Get('/list')
   @UseGuards(JwtAuthGuard)
   getAll(@UserObj() user: UserEntity): Promise<GetListOfAllOrdersResponse> {
@@ -36,12 +38,15 @@ export class OrderController {
     return this.orderService.getTopProductSales(user.id);
   }
 
-
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   getOneById(@Param('id') id: string, @UserObj() user: UserEntity) {
+    console.log("DUPADADA@#@#@#@#@#@")
     return this.orderService.getOneById(id, user.id);
   }
+
+
+
 
   // @Put('/status/:id')
   // @UseGuards(JwtAuthGuard)

@@ -9,7 +9,6 @@ import { UserEntity } from './user/entities/user.entity';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { AdminModule } from './admin/admin.module';
 import { StoreModule } from './store/store.module';
-import { CustomerModule } from './customer/customer.module';
 import { StoreEntity } from './store/entities/store.entity';
 import {LastChangeEntity} from "./admin/entities/lastChange.entity";
 import { FurgonetkaModule } from './furgonetka/furgonetka.module';
@@ -46,7 +45,6 @@ import { OrderModule } from './order/order.module';
     AuthModule,
     AdminModule,
     StoreModule,
-    CustomerModule,
     FurgonetkaModule,
     OrderModule,
   ],

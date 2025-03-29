@@ -45,92 +45,22 @@ export class AuthService {
                 secure: Boolean(process.env.JWT_COOKIE_SECURE),
                 domain: process.env.JWT_COOKIE_DOMAIN,
                 httpOnly: Boolean(process.env.JWT_HTTP_ONLY),
+                sameSite: 'none',
                 maxAge: oneDay,
             })
             .json(userRes);
     }
 
-    // async wpLogin(
-    //     wpLoginDto: WpLoginDto,
-    //     user: any,
-    //     res: Response,
-    // ): Promise<any> {
-    //     try {
-    //         const {username, password} = wpLoginDto;
-    //         const store = await this.storeService.getStoreByUserId(user.id);
-    //         const url = `${store.store_url}/wp-json/jwt-auth/v1/token`;
-    //         const response = await axios.post(url, {
-    //             username,
-    //             password,
-    //         });
+//     return res
+//   .cookie('jwt', token, {
+//     secure: true, // SSL wymagane
+//     domain: '.bigsewciu.shop', // Obsługa subdomen
+//     httpOnly: true,
+//     sameSite: 'None', // <--- MUSI BYĆ "None" dla ciastek między subdomenami
+//     maxAge: oneDay,
+//   })
+//   .json(userRes);
 
-    //         // Odbierz token z odpowiedzi
-    //         const token = response.data.token;
-
-    //         // Zapisz token w encji użytkownika (przykład, dostosuj do Twojej struktury)
-    //         const userEntity = await this.userService.getByEmail(user.email);
-    //         userEntity.wpTokenAuth = token;
-    //         await userEntity.save();
-
-    //         // Tutaj dostosuj odpowiedź do Twoich potrzeb
-    //         const wpLoginRes = {
-    //             token,
-    //         };
-
-    //         // Tutaj możesz dostosować res.cookie do Twoich potrzeb
-    //         return res
-    //             .cookie('wpLoginToken', wpLoginRes.token, {
-    //                 secure: Boolean(process.env.WPLOGINTOKEN_COOKIE_SECURE),
-    //                 domain: process.env.JWT_COOKIE_DOMAIN,
-    //                 httpOnly: Boolean(process.env.JWT_HTTP_ONLY),
-    //                 maxAge: 7 * 24 * 60 * 60 * 1000, // 7 dni w milisekundach
-    //             })
-    //             .json(wpLoginRes);
-    //     } catch (error) {
-    //         console.log(error);
-    //         throw new Error('Nie udało się zalogować do WordPress.');
-    //     }
-    // }
-
-
-    // async checkWpToken(user) {
-    //     try {
-    //         const store = await this.storeService.getStoreByUserId(user.id);
-    //         const url = `${store.store_url}/wp-json/jwt-auth/v1/token/validate`;
-    //         const storedUser = await this.userService.getByEmail(user.email)
-    //         if (!storedUser || !storedUser.wpTokenAuth) {
-    //             console.log(`1`, storedUser.wpTokenAuth)
-    //             return createResponse(false, `Brak przypisanego wpToken`, 401, null);
-    //         }
-
-
-    //         const response = await axios.post(url, null, {
-    //             headers: {
-    //                 Authorization: `Bearer ${storedUser.wpTokenAuth}`,
-    //             },
-    //         });
-
-    //         if (response.status === 200) {
-    //             const result = response.data;
-    //             console.log(`2`, storedUser.wpTokenAuth)
-
-    //             // Sprawdzamy, czy kod odpowiedzi to "jwt_auth_valid_token"
-    //             if (result.code === "jwt_auth_valid_token") {
-    //                 console.log(`3`, storedUser.wpTokenAuth)
-    //                 return createResponse(true, `Token poprawny`, 200, `true`)
-    //             } else {
-    //                 console.log(`4`, storedUser.wpTokenAuth)
-    //                 return createResponse(false, `Token niepoprawny`, 401, null)
-    //             }
-    //         } else {
-    //             console.log(`5`, storedUser.wpTokenAuth)
-    //             return createResponse(false, `Coś poszło nie tak`, 405, null)
-    //         }
-    //     } catch (error) {
-    //         console.log('6')
-    //         return createResponse(false, `Coś poszło nie tak podczas sprawdzania tokenu.`, 500, null)
-    //     }
-    // }
 
     logout(res: Response, responseObj?: { statusCode: number; message: string }) {
         const resObj = responseObj ?? {message: 'Logout was successful'};

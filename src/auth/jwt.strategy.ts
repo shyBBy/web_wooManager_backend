@@ -8,6 +8,7 @@ export interface JwtPayload {
 }
 
 function cookieExtractor(req: any): null | string {
+  console.log('Cookies:', req.cookies); // Sprawdź, czy JWT się pojawia
   return req && req.cookies ? req.cookies?.jwt ?? null : null;
 }
 

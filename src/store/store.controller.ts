@@ -4,7 +4,8 @@ import { StoreCreateDto } from './dto/create-store.dto';
 import { UserObj } from '../decorators/user-object.decorator';
 import { UserEntity } from '../user/entities/user.entity';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import {CouponCreateDto} from "./dto/createCoupon.dto";
+import { CouponCreateDto } from './dto/CreateCoupon.dto';
+// import {CouponCreateDto} from "./dto/createCoupon.dto";
 
 
 @Controller('store')

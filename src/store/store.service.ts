@@ -7,9 +7,10 @@ import {UserEntity} from '../user/entities/user.entity';
 
 import {createAuthHeadersFromStoreCredentials} from '../utils/createAuthHeadersFromStoreCredentials';
 import {Cron, CronExpression} from "@nestjs/schedule";
-import {CouponCreateDto} from "./dto/createCoupon.dto";
+
 import axios from "axios";
 import { getToken } from 'src/utils/furgonetkaGetToken.utils';
+import { CouponCreateDto } from './dto/CreateCoupon.dto';
 
 @Injectable()
 export class StoreService {

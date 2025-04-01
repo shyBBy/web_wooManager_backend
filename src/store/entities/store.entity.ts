@@ -37,6 +37,8 @@ export class StoreEntity extends BaseEntity {
   consumer_secret!: string;
 
   @Column({
+    type: 'varchar',
+    length: 1024, // Dowolna większa wartość niż 255
     default: '',
   })
   furgonetka_access_token!: string;

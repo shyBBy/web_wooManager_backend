@@ -13,6 +13,7 @@ import { StoreEntity } from './store/entities/store.entity';
 import {LastChangeEntity} from "./admin/entities/lastChange.entity";
 import { FurgonetkaModule } from './furgonetka/furgonetka.module';
 import { OrderModule } from './order/order.module';
+import { StatusModule } from './status/status.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { OrderModule } from './order/order.module';
     StoreModule,
     FurgonetkaModule,
     OrderModule,
+    StatusModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -14,6 +14,7 @@ import {LastChangeEntity} from "./admin/entities/lastChange.entity";
 import { FurgonetkaModule } from './furgonetka/furgonetka.module';
 import { OrderModule } from './order/order.module';
 import { StatusModule } from './status/status.module';
+import { OrderEntity } from './order/entities/order.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { StatusModule } from './status/status.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [UserEntity, StoreEntity, LastChangeEntity],
+      entities: [UserEntity, StoreEntity, LastChangeEntity, OrderEntity],
       bigNumberStrings: Boolean(process.env.DB_BIG_NUMBER_STRINGS),
       logging: Boolean(process.env.DB_LOGGING),
       synchronize: Boolean(process.env.DB_SYNCHRONIZE),

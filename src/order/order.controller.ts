@@ -12,10 +12,13 @@ export class OrderController {
 
 
   @Get('/list')
-  @UseGuards(JwtAuthGuard)
-  getAll(@UserObj() user: UserEntity): Promise<GetListOfAllOrdersResponse> {
-    return this.orderService.getAllOrders(user.id);
-  }
+@UseGuards(JwtAuthGuard)
+getAll(
+  @UserObj() user: UserEntity,
+  @Query('search') search?: string, // Dodano parametr search
+): Promise<GetListOfAllOrdersResponse> {
+  return this.orderService.getAllOrders(user.id, search);
+}
 
   @Get('/reports/sales')
   @UseGuards(JwtAuthGuard)

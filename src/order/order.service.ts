@@ -25,20 +25,20 @@ export class OrderService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async getAllOrders(user_id?: string): Promise<GetListOfAllOrdersResponse> {
+  async getAllOrders(user_id?: string, search?: string): Promise<GetListOfAllOrdersResponse> {
     const store = await this.storeService.getStoreByUserId(user_id);
-
+  
     const url = `${store.store_url}/wp-json/wc/v3/orders`;
-
+  
     try {
       const res = await axios.get(url, {
         headers: store.headers,
         params: {
-          per_page: 20,
+          per_page: 100,
+          search, // Dodano parametr search
         },
       });
       const orders = res.data || [];
-  
       return orders;
     } catch (e) {
       console.log(e);

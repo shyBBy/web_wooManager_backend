@@ -9,16 +9,14 @@ import { UserEntity } from '../user/entities/user.entity';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-
-
   @Get('/list')
-@UseGuards(JwtAuthGuard)
-getAll(
-  @UserObj() user: UserEntity,
-  @Query('search') search?: string, // Dodano parametr search
-): Promise<GetListOfAllOrdersResponse> {
-  return this.orderService.getAllOrders(user.id, search);
-}
+  @UseGuards(JwtAuthGuard)
+  getAll(
+      @UserObj() user: UserEntity,
+      @Query('search') search?: string,
+  ): Promise<GetListOfAllOrdersResponse> {
+      return this.orderService.getAllOrders(user.id, search);
+  }
 
   @Get('/reports/sales')
   @UseGuards(JwtAuthGuard)
@@ -44,12 +42,8 @@ getAll(
   @Get('/:id')
   @UseGuards(JwtAuthGuard)
   getOneById(@Param('id') id: string, @UserObj() user: UserEntity) {
-    console.log("DUPADADA@#@#@#@#@#@")
     return this.orderService.getOneById(id, user.id);
   }
-
-
-
 
   // @Put('/status/:id')
   // @UseGuards(JwtAuthGuard)

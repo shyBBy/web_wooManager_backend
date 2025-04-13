@@ -1,3 +1,5 @@
+import { WooCommerceOrderResponse } from "./WooCommerceOrder";
+
 export interface OrderProfileInterface {
     id: number;
     parent_id: number;
@@ -403,7 +405,7 @@ export interface ShippingTrackingInterface {
 }
 
 export interface GetOneOrderResponse {
-    order: OrderProfileInterface;
+    order: WooCommerceOrderResponse;
     shipping: ShippingInterface | null;
     shipping_tracking: ShippingTrackingInterface | null;
 }

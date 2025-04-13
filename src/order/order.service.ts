@@ -12,8 +12,9 @@ import { FurgonetkaService } from 'src/furgonetka/furgonetka.service';
 import { StoreEntity } from 'src/store/entities/store.entity';
 import { OrderEntity } from './entities/order.entity';
 
-import { GetListOfAllOrdersResponse, GetOneOrderResponse, OrderProfileInterface } from '../../types/order/order';
+import { GetOneOrderResponse, OrderProfileInterface } from '../../types/order/order';
 import { getAllOrdersToCheck } from 'src/utils/getAllOrdersToCheck';
+import { WooCommerceOrderResponse, WooCommerceOrdersResponse } from 'types/order/WooCommerceOrder';
 
 
 @Injectable()
@@ -25,7 +26,7 @@ export class OrderService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async getAllOrders(user_id?: string, search?: string): Promise<GetListOfAllOrdersResponse> {
+  async getAllOrders(user_id?: string, search?: string): Promise<WooCommerceOrdersResponse> {
     const store = await this.storeService.getStoreByUserId(user_id);
     const url = `${store.store_url}/wp-json/wc/v3/orders`;
 
@@ -37,7 +38,7 @@ export class OrderService {
                 search, // Dodano parametr search
             },
         });
-        const orders: GetListOfAllOrdersResponse = res.data || [];
+        const orders: WooCommerceOrdersResponse = res.data || [];
         return orders;
     } catch (e) {
         console.log(e);
@@ -57,7 +58,7 @@ export class OrderService {
 
     try {
         const res = await axios.get(url, { headers: store.headers });
-        const orderRes = res.data || {};
+        const orderRes: WooCommerceOrderResponse = res.data || {};
 
         const tracking_number = await getTrackingNumberFromOrder(orderRes);
         if (tracking_number) {

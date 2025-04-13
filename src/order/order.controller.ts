@@ -4,6 +4,7 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { GetListOfAllOrdersResponse } from '../../types/order/order';
 import { UserObj } from '../decorators/user-object.decorator';
 import { UserEntity } from '../user/entities/user.entity';
+import { WooCommerceOrdersResponse } from 'types/order/WooCommerceOrder';
 
 @Controller('order')
 export class OrderController {
@@ -14,7 +15,7 @@ export class OrderController {
   getAll(
       @UserObj() user: UserEntity,
       @Query('search') search?: string,
-  ): Promise<GetListOfAllOrdersResponse> {
+  ): Promise<WooCommerceOrdersResponse> {
       return this.orderService.getAllOrders(user.id, search);
   }
 

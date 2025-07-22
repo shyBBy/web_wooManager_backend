@@ -154,51 +154,51 @@ try {
 }
 
 
-//COUPON SECTION START
+// //COUPON SECTION START
 
 
-async createCoupon(createCouponDto: CouponCreateDto, userUuid: string) {
+// async createCoupon(createCouponDto: CouponCreateDto, userUuid: string) {
 
-    const {
-        code,
-        date_expires,
-        date_expires_gmt,
-        exclude_sale_items,
-        usage_limit_per_user,
-        individual_use,
-        minimum_amount,
-        amount,
-        discount_type,
-        description
-    } = createCouponDto
+//     const {
+//         code,
+//         date_expires,
+//         date_expires_gmt,
+//         exclude_sale_items,
+//         usage_limit_per_user,
+//         individual_use,
+//         minimum_amount,
+//         amount,
+//         discount_type,
+//         description
+//     } = createCouponDto
 
-    const data = {
-        code,
-        discount_type,
-        description,
-        date_expires,
-        usage_limit_per_user,
-        amount,
-        individual_use,
-        exclude_sale_items,
-        minimum_amount,
-    };
+//     const data = {
+//         code,
+//         discount_type,
+//         description,
+//         date_expires,
+//         usage_limit_per_user,
+//         amount,
+//         individual_use,
+//         exclude_sale_items,
+//         minimum_amount,
+//     };
 
-    const store = await this.getStoreByUserId(userUuid)
-    const url = `${store.store_url}/wp-json/wc/v3/coupons`;
+//     const store = await this.getStoreByUserId(userUuid)
+//     const url = `${store.store_url}/wp-json/wc/v3/coupons`;
 
-    try {
-        const res = await axios.post(url, data, {
-            headers: store.headers
-        });
-        const response = res.data || {};
-        return createResponse(true, `Git`, 200)
-    } catch (e) {
-        console.log(e)
-        return createResponse(false, `Coś poszło nie tak`, 400)
-    }
+//     try {
+//         const res = await axios.post(url, data, {
+//             headers: store.headers
+//         });
+//         const response = res.data || {};
+//         return createResponse(true, `Git`, 200)
+//     } catch (e) {
+//         console.log(e)
+//         return createResponse(false, `Coś poszło nie tak`, 400)
+//     }
 
-}
+// }
 
 
 async listAllCoupons(userUuid: string): Promise<any> {

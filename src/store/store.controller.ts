@@ -18,12 +18,12 @@ export class StoreController {
     return this.storeService.create(createStoreDto, user.id);
   }
   
-  @Post('/coupon/create')
-  @UseGuards(JwtAuthGuard)
-  createCoupon(@Body() createCouponDto: CouponCreateDto, @UserObj() user: UserEntity) {
-    console.log(createCouponDto)
-    return this.storeService.createCoupon(createCouponDto, user.id)
-  }
+  // @Post('/coupon/create')
+  // @UseGuards(JwtAuthGuard)
+  // createCoupon(@Body() createCouponDto: CouponCreateDto, @UserObj() user: UserEntity) {
+  //   console.log(createCouponDto)
+  //   return this.storeService.createCoupon(createCouponDto, user.id)
+  // }
   
   @Get('/coupon/list')
   @UseGuards(JwtAuthGuard)
